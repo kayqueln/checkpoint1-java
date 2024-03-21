@@ -1,5 +1,6 @@
 package br.com.fiap.Checkpoint1.model;
 
+import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,13 +11,21 @@ import java.util.List;
 public class Serie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "serie_id")
     private Long id;
     private String titulo;
     private String descricao;
     private Integer anoLancamento;
     private String genero;
-    @OneToMany
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Episodio> episodios;
 
 
+    public Serie(DadosCadastroSerie dadosCadastroSerie) {
+        this.titulo = dadosCadastroSerie.titulo();
+        this.descricao = dadosCadastroSerie.descricao();
+        this.anoLancamento = dadosCadastroSerie.anoLancamento();
+        this.genero = dadosCadastroSerie.genero();
+        this.episodios = dadosCadastroSerie.episodios();
+    }
 }
