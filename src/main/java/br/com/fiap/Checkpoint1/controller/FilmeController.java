@@ -50,7 +50,6 @@ public class FilmeController {
     @DeleteMapping("/{id}")
     public ResponseEntity deletarFilme (@PathVariable Long id){
         filmeRepository.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }

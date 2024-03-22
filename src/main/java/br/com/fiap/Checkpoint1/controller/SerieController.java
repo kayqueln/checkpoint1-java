@@ -1,5 +1,6 @@
 package br.com.fiap.Checkpoint1.controller;
 
+import br.com.fiap.Checkpoint1.dto.serie.DadosDetalharSerie;
 import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
 import br.com.fiap.Checkpoint1.model.Serie;
 import br.com.fiap.Checkpoint1.repository.SerieRepository;
@@ -28,6 +29,12 @@ public class SerieController {
         Serie novaSerie = new Serie(dadosCadastroSerie);
         serieRepository.save(novaSerie);
         return ResponseEntity.status(201).body(novaSerie);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalharSerie> buscarSeriePorId(@PathVariable Long id){
+        Serie serie = serieRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalharSerie(serie));
     }
 
 }

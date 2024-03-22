@@ -1,13 +1,16 @@
 package br.com.fiap.Checkpoint1.model;
 
+import br.com.fiap.Checkpoint1.dto.episodios.DadosCadastroEpisodios;
 import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class Serie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +29,7 @@ public class Serie {
         this.descricao = dadosCadastroSerie.descricao();
         this.anoLancamento = dadosCadastroSerie.anoLancamento();
         this.genero = dadosCadastroSerie.genero();
-        this.episodios = dadosCadastroSerie.episodios();
+
+        this.episodios = new Episodio(DadosCadastroEpisodios);
     }
 }
