@@ -4,9 +4,12 @@ import br.com.fiap.Checkpoint1.dto.filme.DadosAtualizarFilme;
 import br.com.fiap.Checkpoint1.dto.filme.DadosCadastroFilme;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table
 @NoArgsConstructor

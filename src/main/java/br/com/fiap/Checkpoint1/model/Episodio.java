@@ -3,9 +3,12 @@ package br.com.fiap.Checkpoint1.model;
     import br.com.fiap.Checkpoint1.dto.episodios.DadosCadastroEpisodios;
     import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+    import lombok.Getter;
+    import lombok.NoArgsConstructor;
+    import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table
 @NoArgsConstructor
@@ -17,7 +20,8 @@ public class Episodio {
     private String titulo;
     private Integer numeroEpisodio;
     private Integer temporada;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_id")
     private Serie serie;
 
@@ -28,4 +32,5 @@ public class Episodio {
         this.temporada = dadosCadastroEpisodios.temporada();
         this.serie = dadosCadastroEpisodios.serie();
     }
+
 }
