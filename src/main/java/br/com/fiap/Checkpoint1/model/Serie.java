@@ -2,6 +2,7 @@ package br.com.fiap.Checkpoint1.model;
 
 import br.com.fiap.Checkpoint1.dto.episodios.DadosCadastroEpisodios;
 import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -19,11 +20,17 @@ public class Serie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "serie_id")
     private Long id;
+
     private String titulo;
+
     private String descricao;
+
     private Integer anoLancamento;
+
     private String genero;
-    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "Serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "episodio_id")
     private List<Episodio> episodios;
 
 

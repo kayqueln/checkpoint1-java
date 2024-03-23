@@ -8,10 +8,12 @@ import jakarta.persistence.ManyToOne;
 import java.util.List;
 
 public record DadosCadastroEpisodios(
-        Long id,
          String titulo,
          Integer numeroEpisodio,
          Integer temporada,
          Serie serie
 ) {
+    public DadosCadastroEpisodios(Episodio episodio) {
+        this(episodio.getTitulo(), episodio.getNumeroEpisodio(), episodio.getTemporada(), episodio.getSerie());
+    }
 }

@@ -2,6 +2,7 @@ package br.com.fiap.Checkpoint1.controller;
 
 import br.com.fiap.Checkpoint1.dto.serie.DadosDetalharSerie;
 import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
+import br.com.fiap.Checkpoint1.dto.serie.DadosListarSerie;
 import br.com.fiap.Checkpoint1.model.Serie;
 import br.com.fiap.Checkpoint1.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class SerieController {
 
     @Autowired
     private SerieRepository serieRepository;
+
 
     @GetMapping
     public ResponseEntity<List<Serie>> listarSeries(){
