@@ -1,5 +1,6 @@
 package br.com.fiap.Checkpoint1.dto.serie;
 
+import br.com.fiap.Checkpoint1.dto.episodios.DadosCadastroEpisodios;
 import br.com.fiap.Checkpoint1.model.Episodio;
 
 import java.util.List;
@@ -9,6 +10,6 @@ public record DadosCadastroSerie(
         String descricao,
         Integer anoLancamento,
         String genero,
-        List<Episodio> episodios
+        List<DadosCadastroEpisodios> episodios
 ) {
 }

@@ -1,10 +1,8 @@
 package br.com.fiap.Checkpoint1.model;
 
-import br.com.fiap.Checkpoint1.dto.episodios.DadosCadastroEpisodios;
+import br.com.fiap.Checkpoint1.dto.serie.DadosAtualizarSerie;
 import br.com.fiap.Checkpoint1.dto.serie.DadosCadastroSerie;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,17 +18,12 @@ public class Serie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "serie_id")
     private Long id;
-
     private String titulo;
-
     private String descricao;
-
     private Integer anoLancamento;
-
     private String genero;
 
-    @OneToMany(mappedBy = "Serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "episodio_id")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Episodio> episodios;
 
 
@@ -39,6 +32,12 @@ public class Serie {
         this.descricao = dadosCadastroSerie.descricao();
         this.anoLancamento = dadosCadastroSerie.anoLancamento();
         this.genero = dadosCadastroSerie.genero();
-        this.episodios = dadosCadastroSerie.episodios();
+    }
+
+    public void atualizarSerie(DadosAtualizarSerie dadosAlterarSerie) {
+        if(dadosAlterarSerie.titulo() != null) this.titulo = dadosAlterarSerie.titulo();
+        if(dadosAlterarSerie.descricao() != null) this.descricao = dadosAlterarSerie.descricao();
+        if(dadosAlterarSerie.anoLancamento() != null) this.anoLancamento = dadosAlterarSerie.anoLancamento();
+        if(dadosAlterarSerie.genero() != null) this.genero = dadosAlterarSerie.genero();
     }
 }

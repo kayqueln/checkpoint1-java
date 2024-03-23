@@ -1,10 +1,12 @@
 package br.com.fiap.Checkpoint1.controller;
 
+import br.com.fiap.Checkpoint1.business.FilmeBusiness;
 import br.com.fiap.Checkpoint1.dto.filme.DadosAtualizarFilme;
 import br.com.fiap.Checkpoint1.dto.filme.DadosCadastroFilme;
 import br.com.fiap.Checkpoint1.dto.filme.DadosDetalharFilme;
+import br.com.fiap.Checkpoint1.exceptions.NotFoundResourceException;
 import br.com.fiap.Checkpoint1.model.Filme;
-import br.com.fiap.Checkpoint1.repository.FilmeRepository;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,39 +19,54 @@ import java.util.List;
 public class FilmeController {
 
     @Autowired
-    private FilmeRepository filmeRepository;
+    private FilmeBusiness filmeBusiness;
 
     @GetMapping
-    public ResponseEntity<List<Filme>> listarFilmes(){
-        List<Filme> listaFilmes = filmeRepository.findAll();
+    public ResponseEntity<List<Filme>> listarFilmes(@PathParam("titulo") String titulo,
+                                                    @PathParam("genero") String genero,
+                                                    @PathParam("anoLancamento") Integer anoLancamento){
+        List<Filme> listaFilmes = filmeBusiness.listarTodosFilmes(titulo, genero, anoLancamento);
         return ResponseEntity.ok(listaFilmes);
     }
 
     @PostMapping
-    public ResponseEntity<Filme> cadastrarFilme(@RequestBody DadosCadastroFilme dadosCadastroFilme){
-        Filme novoFilme = new Filme(dadosCadastroFilme);
-        Filme filmeCadastrado = filmeRepository.save(novoFilme);
-        return ResponseEntity.status(201).body(filmeCadastrado);
+    public ResponseEntity cadastrarFilme(@RequestBody DadosCadastroFilme dadosCadastroFilme){
+        try {
+            Filme filmeCadastrado = filmeBusiness.cadastrarFilme(dadosCadastroFilme);
+            return ResponseEntity.status(201).body(filmeCadastrado);
+        }catch (Exception e){
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DadosDetalharFilme> buscarFilmePorId(@PathVariable Long id){
-        Filme filme = filmeRepository.getReferenceById(id);
-        return ResponseEntity.ok(new DadosDetalharFilme(filme));
+    public ResponseEntity buscarFilmePorId(@PathVariable Long id){
+        try{
+            Filme filme = filmeBusiness.buscarFilmePorId(id);
+            return ResponseEntity.ok(new DadosDetalharFilme(filme));
+        }catch (NotFoundResourceException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DadosDetalharFilme> atualizarFilme(@PathVariable Long id, @RequestBody DadosAtualizarFilme dadosAtualizarFilme){
-        Filme filme = filmeRepository.getReferenceById(id);
-        filme.atualizarFilme(dadosAtualizarFilme);
-        filmeRepository.save(filme);
-
-        return ResponseEntity.ok(new DadosDetalharFilme(filme));
+    public ResponseEntity atualizarFilme(@PathVariable Long id, @RequestBody DadosAtualizarFilme dadosAtualizarFilme){
+        try{
+            Filme filme = filmeBusiness.alterarFilme(id, dadosAtualizarFilme);
+            return ResponseEntity.ok(new DadosDetalharFilme(filme));
+        }catch (NotFoundResourceException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletarFilme (@PathVariable Long id){
-        filmeRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try{
+            filmeBusiness.deletarFilme(id);
+            return ResponseEntity.noContent().build();
+        }catch (NotFoundResourceException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }
