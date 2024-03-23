@@ -40,3 +40,22 @@ public class SerieController {
     }
 
 }
+
+//{
+//        "titulo": "Black Mirror",
+//        "descricao": "desc",
+//        "anoLancamento": 2015,
+//        "genero": "suspense",
+//        "episodios": [
+//        {
+//        "titulo": "Alguma coisa estranha",
+//        "numeroEpisodio": 1,
+//        "temporada": 1
+//        },
+//        {
+//        "titulo": "Alguma coisa mais estranha",
+//        "numeroEpisodio": 2,
+//        "temporada": 1
+//        }
+//        ]
+//        }
