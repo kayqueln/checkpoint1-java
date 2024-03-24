@@ -76,7 +76,7 @@ public class SerieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity alterarSerie(@PathVariable Long id){
+    public ResponseEntity deletarSerie(@PathVariable Long id){
         try{
             serieBusiness.deletarSerie(id);
             return ResponseEntity.noContent().build();
